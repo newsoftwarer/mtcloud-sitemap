@@ -2,15 +2,15 @@ name: Update Sitemap Daily
 
 on:
   schedule:
-    - cron: "0 2 * * *"  # 每天台灣時間上午 10 點（UTC+8）
-  workflow_dispatch:      # 可手動執行
+    - cron: "0 2 * * *"  # 每日台灣時間上午 10:00（UTC+8）
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Generate sitemap
+      - name: Generate sitemap.xml
         run: |
           echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
@@ -39,7 +39,7 @@ jobs:
           done
           echo '</urlset>' >> sitemap.xml
 
-            - name: Commit changes
+      - name: Commit and push sitemap
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -48,4 +48,3 @@ jobs:
           git push origin HEAD
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
