@@ -1,3 +1,39 @@
+name: Update Sitemap Daily
+
+on:
+  schedule:
+    - cron: "0 2 * * *"  # 台灣時間每天上午 10 點
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate sitemap.xml
+        run: |
+          echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
+          echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
+          for url in \
+            https://www.mtclouds.com/ \
+            https://www.mtclouds.com/最新消息 \
+            https://www.mtclouds.com/服務項目 \
+            https://www.mtclouds.com/服務項目/台灣投資及工商服務 \
+            https://www.mtclouds.com/服務項目/境外公司設立及管理服務 \
+            https://www.mtclouds.com/服務項目/越南投資及法律諮詢 \
+            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/越南公司設立 \
+            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/商店餐飲投資 \
+            https://www.mtclouds.com/服務項目/會計師服務 \
+            https://www.mtclouds.com/合作夥伴 \
+            https://www.mtclouds.com/關於我們 \
+            https://www.mtclouds.com/聯絡我們; do
+            echo "  <url><loc>$url</loc><lastmod>$(date +%Y-%m-%d)</lastmod></url>" >> sitemap.xml
+          done
+          echo '</urlset>' >> sitemap.xml
+
       - name: Generate sitemap.html
         run: |
           cat <<'EOF' > sitemap.html
@@ -41,3 +77,17 @@
 </body>
 </html>
 EOF
+
+      - name: Commit and push sitemap files
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml sitemap.html || true
+          git commit -m "Auto-update sitemap on $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push origin HEAD
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ping Google to notify sitemap update
+        run: |
+          curl "https://www.google.com/ping?sitemap=https://sitemap.mtclouds.com/sitemap.xml"
