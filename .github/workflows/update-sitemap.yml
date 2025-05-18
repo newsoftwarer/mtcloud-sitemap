@@ -34,7 +34,7 @@ jobs:
           done
           echo '</urlset>' >> sitemap.xml
 
-           - name: Generate sitemap.html
+      - name: Generate sitemap.html
         run: |
           cat <<'EOF' > sitemap.html
 <!DOCTYPE html>
@@ -78,7 +78,6 @@ jobs:
 </html>
 EOF
 
-
       - name: Commit and push sitemap files
         run: |
           git config --global user.name "github-actions[bot]"
@@ -92,4 +91,3 @@ EOF
       - name: Ping Google to notify sitemap update
         run: |
           curl "https://www.google.com/ping?sitemap=https://sitemap.mtclouds.com/sitemap.xml"
-EOF
