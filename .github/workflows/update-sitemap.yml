@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Generate sitemap.xml
+            - name: Generate sitemap.xml
         run: |
           echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
@@ -25,7 +25,7 @@ jobs:
             https://www.mtclouds.com/服務項目/境外公司設立及管理服務 \
             https://www.mtclouds.com/服務項目/越南投資及法律諮詢 \
             https://www.mtclouds.com/服務項目/越南投資及法律諮詢/越南公司設立 \
-            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/商店、餐飲投資 \
+            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/商店餐飲投資 \
             https://www.mtclouds.com/服務項目/會計師服務 \
             https://www.mtclouds.com/合作夥伴 \
             https://www.mtclouds.com/關於我們 \
@@ -45,7 +45,7 @@ jobs:
             https://www.mtclouds.com/服務項目/境外公司設立及管理服務 \
             https://www.mtclouds.com/服務項目/越南投資及法律諮詢 \
             https://www.mtclouds.com/服務項目/越南投資及法律諮詢/越南公司設立 \
-            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/商店、餐飲投資 \
+            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/商店餐飲投資 \
             https://www.mtclouds.com/服務項目/會計師服務 \
             https://www.mtclouds.com/合作夥伴 \
             https://www.mtclouds.com/關於我們 \
