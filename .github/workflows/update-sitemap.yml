@@ -1,6 +1,6 @@
       - name: Generate sitemap.html
         run: |
-          cat <<EOF > sitemap.html
+          cat <<'EOF' > sitemap.html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
