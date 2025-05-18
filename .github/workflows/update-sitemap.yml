@@ -2,7 +2,7 @@ name: Update Sitemap Daily
 
 on:
   schedule:
-    - cron: "0 2 * * *"  # 台灣時間上午 10 點 (UTC+8)
+    - cron: "0 2 * * *"  # 每日台灣時間上午 10 點（UTC+8）
   workflow_dispatch:
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-            - name: Generate sitemap.xml
+      - name: Generate sitemap.xml
         run: |
           echo '<?xml version="1.0" encoding="UTF-8"?>' > sitemap.xml
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> sitemap.xml
@@ -39,31 +39,4 @@ jobs:
           echo '<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8"><title>網站地圖</title><style>body{font-family:sans-serif;padding:2em;max-width:800px;margin:auto;background:#f9f9f9}a{color:#06c;text-decoration:none}a:hover{text-decoration:underline}</style></head><body><h1>網站地圖</h1><ul>' > sitemap.html
           for url in \
             https://www.mtclouds.com/ \
-            https://www.mtclouds.com/最新消息 \
-            https://www.mtclouds.com/服務項目 \
-            https://www.mtclouds.com/服務項目/台灣投資及工商服務 \
-            https://www.mtclouds.com/服務項目/境外公司設立及管理服務 \
-            https://www.mtclouds.com/服務項目/越南投資及法律諮詢 \
-            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/越南公司設立 \
-            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/商店餐飲投資 \
-            https://www.mtclouds.com/服務項目/會計師服務 \
-            https://www.mtclouds.com/合作夥伴 \
-            https://www.mtclouds.com/關於我們 \
-            https://www.mtclouds.com/聯絡我們; do
-            echo "<li><a href='$url'>$url</a></li>" >> sitemap.html
-          done
-          echo '</ul></body></html>' >> sitemap.html
-
-      - name: Commit and push sitemap files
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml sitemap.html || true
-          git commit -m "Auto-update sitemap on $(date +'%Y-%m-%d')" || echo "No changes to commit"
-          git push origin HEAD
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Ping Google
-        run: |
-          curl "https://www.google.com/ping?sitemap=https://sitemap.mtclouds.com/sitemap.xml"
+            https://www.mtclo
