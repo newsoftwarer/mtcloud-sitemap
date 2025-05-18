@@ -2,7 +2,7 @@ name: Update Sitemap Daily
 
 on:
   schedule:
-    - cron: "0 2 * * *"
+    - cron: "0 2 * * *"  # 每日台灣時間上午 10 點（UTC+8）
   workflow_dispatch:
 
 jobs:
@@ -36,47 +36,23 @@ jobs:
 
       - name: Generate sitemap.html
         run: |
-          cat <<'EOF' > sitemap.html
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <title>網站地圖</title>
-  <style>
-    body { font-family: sans-serif; padding: 2em; max-width: 800px; margin: auto; background: #f9f9f9; }
-    ul { list-style-type: none; padding-left: 1em; }
-    li { margin-bottom: 0.3em; }
-    a { color: #06c; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <h1>網站地圖</h1>
-  <ul>
-    <li><a href="https://www.mtclouds.com/">首頁</a></li>
-    <li><a href="https://www.mtclouds.com/最新消息">最新消息</a></li>
-    <li>
-      <a href="https://www.mtclouds.com/服務項目">服務項目</a>
-      <ul>
-        <li><a href="https://www.mtclouds.com/服務項目/台灣投資及工商服務">台灣投資及工商服務</a></li>
-        <li><a href="https://www.mtclouds.com/服務項目/境外公司設立及管理服務">境外公司設立及管理服務</a></li>
-        <li>
-          <a href="https://www.mtclouds.com/服務項目/越南投資及法律諮詢">越南投資及法律諮詢</a>
-          <ul>
-            <li><a href="https://www.mtclouds.com/服務項目/越南投資及法律諮詢/越南公司設立">越南公司設立</a></li>
-            <li><a href="https://www.mtclouds.com/服務項目/越南投資及法律諮詢/商店餐飲投資">商店餐飲投資</a></li>
-          </ul>
-        </li>
-        <li><a href="https://www.mtclouds.com/服務項目/會計師服務">會計師服務</a></li>
-      </ul>
-    </li>
-    <li><a href="https://www.mtclouds.com/合作夥伴">合作夥伴</a></li>
-    <li><a href="https://www.mtclouds.com/關於我們">關於我們</a></li>
-    <li><a href="https://www.mtclouds.com/聯絡我們">聯絡我們</a></li>
-  </ul>
-</body>
-</html>
-EOF
+          echo '<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8"><title>網站地圖</title><style>body{font-family:sans-serif;padding:2em;max-width:800px;margin:auto;background:#f9f9f9}a{color:#06c;text-decoration:none}a:hover{text-decoration:underline}</style></head><body><h1>網站地圖</h1><ul>' > sitemap.html
+          for url in \
+            https://www.mtclouds.com/ \
+            https://www.mtclouds.com/最新消息 \
+            https://www.mtclouds.com/服務項目 \
+            https://www.mtclouds.com/服務項目/台灣投資及工商服務 \
+            https://www.mtclouds.com/服務項目/境外公司設立及管理服務 \
+            https://www.mtclouds.com/服務項目/越南投資及法律諮詢 \
+            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/越南公司設立 \
+            https://www.mtclouds.com/服務項目/越南投資及法律諮詢/商店餐飲投資 \
+            https://www.mtclouds.com/服務項目/會計師服務 \
+            https://www.mtclouds.com/合作夥伴 \
+            https://www.mtclouds.com/關於我們 \
+            https://www.mtclouds.com/聯絡我們; do
+            echo "<li><a href='$url'>$url</a></li>" >> sitemap.html
+          done
+          echo '</ul></body></html>' >> sitemap.html
 
       - name: Commit and push sitemap files
         run: |
