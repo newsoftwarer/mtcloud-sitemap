@@ -36,7 +36,7 @@ jobs:
 
       - name: Generate sitemap.html
         run: |
-          cat <<'EOF' > sitemap.html
+          cat <<'' > sitemap.html
           <!DOCTYPE html>
           <html lang="zh-Hant">
           <head>
@@ -76,7 +76,7 @@ jobs:
             </ul>
           </body>
           </html>
-EOF
+
 
       - name: Commit and push sitemap files
         run: |
@@ -91,3 +91,4 @@ EOF
       - name: Ping Google to notify sitemap update
         run: |
           curl "https://www.google.com/ping?sitemap=https://sitemap.mtclouds.com/sitemap.xml"
+EOF
