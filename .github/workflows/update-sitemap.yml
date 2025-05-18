@@ -2,7 +2,7 @@ name: Update Sitemap Daily
 
 on:
   schedule:
-    - cron: "0 2 * * *"  # 台灣時間每天上午 10 點
+    - cron: "0 2 * * *"  # 每日 UTC+8 上午 10 點
   workflow_dispatch:
 
 jobs:
